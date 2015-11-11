@@ -188,6 +188,17 @@ namespace UiLib
 		ASSERT(pstr);
 		if( pstr == NULL ) return 0;
 		::GetWindowText(m_hWnd, pstr, cchLen);
+		if (m_pOwner->GetNumberOnlyPlus())
+		{
+			wstring ws_Str = pstr;
+			if (ws_Str.find_first_not_of(_T("+-.0123456789")) >= 0)
+			{
+				return 0;
+			}
+			if (ws_Str.at(0))
+			{
+			}
+		}
 		m_pOwner->m_sText = pstr;
 		m_pOwner->GetManager()->SendNotify(m_pOwner, DUI_MSGTYPE_TEXTCHANGED);
 		return 0;
@@ -654,10 +665,18 @@ MatchFailed:
 		if( m_cxyFixed.cy == 0 ) return CSize(m_cxyFixed.cx, m_pManager->GetFontInfo(GetFont())->tm.tmHeight + 6);
 		return CControlUI::EstimateSize(szAvailable);
 	}
-
+	void CEditUI::SetNumberOnlyPlus(bool numberOnlyPlus)
+	{
+		m_bNumberOnlyPlus = numberOnlyPlus;
+	}
+	bool CEditUI::GetNumberOnlyPlus()
+	{
+		return m_bNumberOnlyPlus;
+	}
 	void CEditUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if( _tcscmp(pstrName, _T("readonly")) == 0 ) SetReadOnly(_tcscmp(pstrValue, _T("true")) == 0);
+		else if ( _tcscmp(pstrName, _T("numberonlyplus")) == 0 ) SetNumberOnlyPlus(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("numberonly")) == 0 ) SetNumberOnly(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("password")) == 0 ) SetPasswordMode(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("maxchar")) == 0 ) SetMaxChar(_ttoi(pstrValue));

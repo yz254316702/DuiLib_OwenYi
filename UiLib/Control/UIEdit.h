@@ -77,6 +77,9 @@ namespace UiLib
 		void SetTimerDelay(UINT nDelay);
 		UINT GetTimerDelay();
 
+		void SetNumberOnlyPlus(bool numberOnlyPlus);
+		bool GetNumberOnlyPlus();
+
 	public:
 		void OnTimer(UINT iTimerID);
 	protected:
@@ -103,6 +106,7 @@ namespace UiLib
 		DWORD m_dwEditbkColor;
 		DWORD m_dwEditTextColor;
 		int m_iWindowStyls;
+		bool m_bNumberOnlyPlus;
 	};
 }
 #endif // __UIEDIT_H__
