@@ -191,19 +191,12 @@ namespace UiLib
 		if (m_pOwner->GetNumberOnlyPlus())
 		{
 			wstring ws_Str = pstr;
-			int findindex = -1;
 			if (ws_Str.find_first_not_of(_T("+-.0123456789")) >= 0)
 			{
 				return 0;
 			}
-			findindex = ws_Str.find_last_of(_T("+-"));
-			if (findindex > 0)
+			if (ws_Str.at(0))
 			{
-				return 0;
-			}
-			if (ws_Str.find(_T('.')) != ws_Str.rfind(_T('.')))
-			{
-				return 0;
 			}
 		}
 		m_pOwner->m_sText = pstr;
@@ -683,7 +676,7 @@ MatchFailed:
 	void CEditUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 	{
 		if( _tcscmp(pstrName, _T("readonly")) == 0 ) SetReadOnly(_tcscmp(pstrValue, _T("true")) == 0);
-		else if( _tcscmp(pstrName, _T("numberonlyplus")) == 0 ) SetNumberOnlyPlus(_tcscmp(pstrValue, _T("true")) == 0);
+		else if ( _tcscmp(pstrName, _T("numberonlyplus")) == 0 ) SetNumberOnlyPlus(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("numberonly")) == 0 ) SetNumberOnly(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("password")) == 0 ) SetPasswordMode(_tcscmp(pstrValue, _T("true")) == 0);
 		else if( _tcscmp(pstrName, _T("maxchar")) == 0 ) SetMaxChar(_ttoi(pstrValue));
